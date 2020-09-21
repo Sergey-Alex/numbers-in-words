@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+
+</style>
+<body>
+<input type="text" id="inp">
+<p id="p"></p>
+<div id="div"></div>
+<script>
+    let inp = document.getElementById('inp');
+    let p = document.getElementById('p');
+
+    let nums = [
+             ' ноль', ' один', ' два', ' три', ' четыре',
+             ' пять', ' шесть', ' семь', ' восемь', ' девять'
+    ]
+
+    inp.addEventListener('input', showNumber)
+
+function showNumber() {
+    switch (inp.value.length) {
+        case 0 :
+            p.innerHTML = 'Enter number';
+            break;
+        case 1 :
+            p.innerHTML = singleNum(inp.value);
+            break;
+        case 2:
+            p.innerHTML = showTwoNumber(inp.value);
+            break;
+    }
+}
+
+   function singleNum(num) {
+        return nums[num];
+    }
+
+    function tennerNum(num) {
+        if (num == 1){
+            return 'десять';
+        } else if (num == 2 || num == 3){
+            return singleNum(num) + 'дцать';
+        } else if (num == 4){
+            return 'сорок';
+        } else if (num >= 5 && num <=8){
+            return singleNum(num) + 'десят';
+        } else  if (num == 9) {
+            return  'девяносто';
+        }
+    }
+
+    function showTwoNumber(num) {
+        let lastNum = num.slice(-1);
+        let firstNum = num.slice(0,1);
+
+        if (lastNum == 0){
+             return tennerNum(firstNum)
+        } else  if (firstNum == 1){
+            if (lastNum == 1){
+                return 'одинадцать';
+            } else if (lastNum == 2){
+                return  'двенадцать'
+            } else if(lastNum == 3){
+                return 'тринадцать';
+            } else if (lastNum >=4 && lastNum <= 9){
+                return deleteLastSymbol(singleNum(lastNum)) + 'надцать'
+            }
+        } else {
+            return tennerNum(firstNum) + ' ' + singleNum(lastNum);
+        }
+    }
+
+    function deleteLastSymbol(str) {
+        return str.split('').splice(0, str.length-1).join('');
+    }
+
+</script>
+</body>
+</html>
